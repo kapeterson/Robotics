@@ -42,6 +42,8 @@ public class MovingColorReader {
 		  rightMotor.rotate(degrees);
 	}
 	
+	
+	// Main 
 	public static void waitForSensorPress(EV3TouchSensor ts){
 		
 		  float[] touchsample = new float[1];
@@ -69,6 +71,9 @@ public class MovingColorReader {
   		return (int)sample[0];
   		
 	}
+	
+	// Main file
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
