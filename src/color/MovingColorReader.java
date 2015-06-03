@@ -41,8 +41,7 @@ public class MovingColorReader {
 		  leftMotor.rotate(degrees, true);
 		  rightMotor.rotate(degrees);
 	}
-	
-	
+		
 	// Main 
 	public static void waitForSensorPress(EV3TouchSensor ts){
 		
