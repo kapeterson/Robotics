@@ -1,6 +1,8 @@
 package color;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import lejos.hardware.ev3.LocalEV3;
@@ -22,6 +24,10 @@ public class BinaryMoveColorReader {
 	static RegulatedMotor leftMotor = Motor.A;
 	static RegulatedMotor rightMotor = Motor.B;
 	
+	public static enum Movement {
+		FORWARD, BACKWARD, RIGHT, LEFT
+	}
+	
 	public static void waitForSensorPush(EV3TouchSensor ts){
 		float[] touchsample = new float[1];
 		SampleProvider sProvider = ts.getTouchMode();
@@ -36,15 +42,30 @@ public class BinaryMoveColorReader {
 		}
 	}
 	
+	public static void MoveLeft(){
+    	leftMotor.rotateTo(255, true);
+    	rightMotor.rotateTo(-255);
+    	
+    	Delay.msDelay(2000);
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
+		List<Movement> movements = new ArrayList<Movement>();
+		movements.add(Movement.FORWARD);
+		movements.add(Movement.FORWARD);
+		movements.add(Movement.LEFT);
+		movements.add(Movement.FORWARD);
+
+		
 		Map<Integer, String> colorMap = new HashMap<Integer, String>();
 
 		colorMap.put(13, "BROWN");
 		colorMap.put(0, "RED");
 		colorMap.put(7, "BLACK");
 		colorMap.put(6, "WHITE");
-		
+		colorMap.put(3, "GREEN");
+
 		Port port = LocalEV3.get().getPort("S4");
 		Port touchport = LocalEV3.get().getPort("S2");
 
@@ -57,7 +78,7 @@ public class BinaryMoveColorReader {
 		SampleProvider lightProvider = cs.getColorIDMode();
 		
 		EV3TouchSensor ts = new EV3TouchSensor(touchport);
-		SampleProvider gProvider = ts.getTouchMode();
+		//SampleProvider gProvider = ts.getTouchMode();
 		
 		//lcd.drawString("Hey dude we good", 0, 20, GraphicsLCD.BASELINE);
 		
@@ -97,16 +118,32 @@ public class BinaryMoveColorReader {
 		  leftMotor.setAcceleration(800);
 		  rightMotor.setAcceleration(800);
 		  
-		  for ( int i = 0; i < 3; i++){
+		  for ( Movement movement : movements){
 			  
-			  System.out.println("\n\nPerforming movement " + i);
+			  System.out.println("\n\nPerforming movement " );
 
 			  
-			  leftMotor.rotate(fwd, true);
-			  rightMotor.rotate(fwd);
+			  switch ( movement){
+			  	
+			  	case FORWARD:
+			  		System.out.println("Move foward");
+					leftMotor.rotate(fwd, true);
+					rightMotor.rotate(fwd);			  		
+			  		break;
+			  	case LEFT:
+			  		System.out.println("Left");
+			  		MoveLeft();
+			  		break;
+			  	case RIGHT:
+			  		System.out.println("Right");
+			  		break;
+				  
+			  	
+			  }
+
 			  
 			  Delay.msDelay(1000);
-			  System.out.println("Completed movement " + i + " -  read 4 samples \n\n");
+			  System.out.println("Completed movement "  + " -  read 4 samples \n\n");
 			  		
 			  
 			  	Delay.msDelay(1000);
@@ -134,7 +171,7 @@ public class BinaryMoveColorReader {
 			  		Delay.msDelay(500);
 			  	}
 			  	
-			  System.out.println("Completed measurements for movement " + i +"\n\n*************\n\n");
+			  System.out.println("Completed measurements for movement \n\n*************\n\n");
 			  Delay.msDelay(1000);
 			  waitForSensorPush(ts);
 

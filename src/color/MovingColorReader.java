@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import lejos.hardware.ev3.LocalEV3;
-import lejos.hardware.lcd.Font;
-import lejos.hardware.lcd.GraphicsLCD;
 import lejos.hardware.motor.Motor;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;

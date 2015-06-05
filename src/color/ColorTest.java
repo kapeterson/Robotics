@@ -1,6 +1,5 @@
 package color;
 
-import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +28,8 @@ public class ColorTest {
 		colorMap.put(13, "BROWN");
 		colorMap.put(0, "RED");
 		colorMap.put(7, "BLACK");
+		colorMap.put(6, "WHITE");
+		colorMap.put(3, "GREEN");
 		
 		Port port = LocalEV3.get().getPort("S4");
 		Port touchport = LocalEV3.get().getPort("S2");
@@ -40,7 +41,7 @@ public class ColorTest {
 		EV3ColorSensor cs = new EV3ColorSensor(port);
 		//SampleProvider lightProvider = cs.getRedMode();
 		SampleProvider lightProvider = cs.getColorIDMode();
-		
+
 		
 		// Color ID:
 		// 0 - Red ( works ... Orange / Red /
@@ -72,9 +73,11 @@ public class ColorTest {
 			int thissample = (int)sample[0];
 			if ( colorMap.containsKey(thissample)){
 				System.out.format("SAMPLE Value = %s with value %d\n", colorMap.get(thissample), thissample );
+			} else {
+				System.out.println("Raw VAlue: " +thissample );
 			}
-			lcd.drawString("Sample = " + sample[0], 0, 20, GraphicsLCD.BASELINE);
-			System.out.println("Sample " + sample[0]);
+			//lcd.drawString("Sample = " + sample[0], 0, 20, GraphicsLCD.BASELINE);
+			//System.out.println("Sample " + sample[0]);
 			
 			Delay.msDelay(1000);
 			lcd.clear();

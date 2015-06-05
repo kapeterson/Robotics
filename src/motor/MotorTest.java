@@ -36,6 +36,7 @@ public class MotorTest {
 
 	    Delay.msDelay(2000);
 	    
+	    /*
 	    leftMotor.resetTachoCount();
 	    rightMotor.resetTachoCount();
 	    
@@ -45,7 +46,7 @@ public class MotorTest {
 	    rightMotor.rotateTo(-fwd,true);
 	    leftMotor.rotateTo(-fwd);
 	    
-	    
+	    */
 	    Delay.msDelay(2000);
 
 	}

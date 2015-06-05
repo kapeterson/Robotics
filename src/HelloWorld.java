@@ -15,7 +15,7 @@ public class HelloWorld {
 		GraphicsLCD lcd = LocalEV3.get().getGraphicsLCD();
 		lcd.setFont(Font.getSmallFont());
 		
-		final int sw = lcd.getWidth();
+		//final int sw = lcd.getWidth();
 		final int sh = lcd.getHeight();
 		lcd.drawString("[ .99 .88 .75 .25 .33 .22 .11 ]", 0, sh/5, GraphicsLCD.BASELINE);
 		Delay.msDelay(5000);
