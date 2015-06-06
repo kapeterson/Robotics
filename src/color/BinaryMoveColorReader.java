@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import kp.lego.movement.Movement;
+
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.Font;
 import lejos.hardware.lcd.GraphicsLCD;
@@ -24,10 +26,7 @@ public class BinaryMoveColorReader {
 	static RegulatedMotor leftMotor = Motor.A;
 	static RegulatedMotor rightMotor = Motor.B;
 	
-	public static enum Movement {
-		FORWARD, BACKWARD, RIGHT, LEFT
-	}
-	
+
 	public static void waitForSensorPush(EV3TouchSensor ts){
 		float[] touchsample = new float[1];
 		SampleProvider sProvider = ts.getTouchMode();
@@ -42,20 +41,33 @@ public class BinaryMoveColorReader {
 		}
 	}
 	
-	public static void MoveLeft(){
-    	leftMotor.rotateTo(255, true);
-    	rightMotor.rotateTo(-255);
+	public static void MoveLeft(int degrees){
+    	leftMotor.rotate(255, true);
+    	rightMotor.rotate(-255);
     	
     	Delay.msDelay(2000);
+    	leftMotor.rotate(degrees, true);
+    	rightMotor.rotate(degrees);
+    	
+    	Delay.msDelay(1000);
+	}
+	
+	public static void MoveForward(int degrees){
+    	leftMotor.rotate(degrees, true);
+    	rightMotor.rotate(degrees);
+    	
+    	Delay.msDelay(1000);
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
 		List<Movement> movements = new ArrayList<Movement>();
 		movements.add(Movement.FORWARD);
+		movements.add(Movement.LEFT);
 		movements.add(Movement.FORWARD);
 		movements.add(Movement.LEFT);
 		movements.add(Movement.FORWARD);
+		movements.add(Movement.LEFT);
 
 		
 		Map<Integer, String> colorMap = new HashMap<Integer, String>();
@@ -127,12 +139,13 @@ public class BinaryMoveColorReader {
 			  	
 			  	case FORWARD:
 			  		System.out.println("Move foward");
-					leftMotor.rotate(fwd, true);
-					rightMotor.rotate(fwd);			  		
+					//leftMotor.rotate(fwd, true);
+					//rightMotor.rotate(fwd);	
+			  		MoveForward(fwd);
 			  		break;
 			  	case LEFT:
 			  		System.out.println("Left");
-			  		MoveLeft();
+			  		MoveLeft(fwd);
 			  		break;
 			  	case RIGHT:
 			  		System.out.println("Right");

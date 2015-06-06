@@ -1,5 +1,6 @@
 package motor;
 
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.motor.Motor;
 import lejos.robotics.RegulatedMotor;
 import lejos.utility.Delay;
@@ -20,12 +21,12 @@ public class MotorTest {
 	    
 	    leftMotor.rotateTo(0);
 	    rightMotor.rotateTo(0);
-	    leftMotor.setSpeed(300);
-	    rightMotor.setSpeed(300);
-	    leftMotor.setAcceleration(800);
-	    rightMotor.setAcceleration(800);
+	    leftMotor.setSpeed(200);
+	    rightMotor.setSpeed(200);
+	    leftMotor.setAcceleration(100);
+	    rightMotor.setAcceleration(100);
 
-	    int fwd = 360 * 5;
+	    int fwd = 360 * 1;
 
 	    
 	    leftMotor.rotateTo(fwd, true);
@@ -47,6 +48,17 @@ public class MotorTest {
 	    leftMotor.rotateTo(-fwd);
 	    
 	    */
+	    System.out.println("LEFT TACHO: " + leftMotor.getTachoCount() + " Right : " + rightMotor.getTachoCount());
+	    
+	    Delay.msDelay(2000);
+	    
+	    leftMotor.rotate(fwd, true);
+	    rightMotor.rotate(fwd);
+
+	    System.out.println("LEFT TACHO: " + leftMotor.getTachoCount() + " Right : " + rightMotor.getTachoCount());
+
+	    
+
 	    Delay.msDelay(2000);
 
 	}
