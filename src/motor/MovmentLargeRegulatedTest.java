@@ -15,6 +15,10 @@ public class MovmentLargeRegulatedTest {
 	 */
     static EV3LargeRegulatedMotor leftMotor;
     static EV3LargeRegulatedMotor rightMotor;
+	
+    //static RegulatedMotor rightMotor = Motor.B;
+    //static RegulatedMotor leftMotor = Motor.A;
+    
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		leftMotor = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
