@@ -30,7 +30,8 @@ public class ColorTest {
 		colorMap.put(7, "BLACK");
 		colorMap.put(6, "WHITE");
 		colorMap.put(3, "GREEN");
-		
+		colorMap.put(2, "BLUE");
+
 		Port port = LocalEV3.get().getPort("S4");
 		Port touchport = LocalEV3.get().getPort("S2");
 
