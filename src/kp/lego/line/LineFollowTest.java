@@ -54,8 +54,8 @@ public class LineFollowTest {
 		float coefficient = 7.0f;
 
 		float baseSpeed = 400;
-		float leftSpeed = baseSpeed + coefficient * ( readval * 100 - mid);
-		float rightSpeed = baseSpeed + coefficient * ( mid - (readval * 100));
+		float leftSpeed = mid + coefficient * ( readval * 100 - mid);
+		float rightSpeed = mid + coefficient * ( mid - (readval * 100));
 		
 		System.out.println("Left speed = " + leftSpeed + " right speed = " + rightSpeed);
 		Delay.msDelay(250);
@@ -80,8 +80,8 @@ public class LineFollowTest {
 			lightProvider.fetchSample(sample, 0);
 			float thissample =  sample[0];
 			System.out.println("sample : " + thissample);
-			leftSpeed = baseSpeed + coefficient * ((thissample * 100) - mid);
-			rightSpeed = baseSpeed + coefficient * (mid - (thissample*100));
+			leftSpeed = mid + coefficient * ((thissample * 100) - mid);
+			rightSpeed = mid + coefficient * (mid - (thissample*100));
 			rightMotor.setSpeed(rightSpeed);
 			leftMotor.setSpeed(leftSpeed);
 			System.out.println("leftSpeed  " + leftSpeed + " right speed = " + rightSpeed);
