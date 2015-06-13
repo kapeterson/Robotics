@@ -16,9 +16,7 @@ public class UltrasoundTest {
 	public static final String TOUCH_PORT = "S2";
 	public static EV3UltrasonicSensor us;
 	public static EV3TouchSensor ts;
-	
 	public static Port TouchPort;
-
 	public static Port UltrasoundPort;
 	
 	public static void main(String[] args) {
