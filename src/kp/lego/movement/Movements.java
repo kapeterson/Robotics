@@ -9,13 +9,15 @@ public class Movements {
 	 * @param args
 	 */
 	
-	public static void MoveForward(){
-		
+	public static void MoveForward(RegulatedMotor leftMotor, RegulatedMotor rightMotor, int degrees ){
+		leftMotor.rotate(degrees,true);
+		rightMotor.rotate(degrees);
 	}
 	
 	public static void RotateLeft(RegulatedMotor leftMotor, RegulatedMotor rightMotor, int degrees ){
-    	leftMotor.rotate(280, true);
-    	rightMotor.rotate(-280);
+		// 280 is the right value for the two wheel education bot
+    	leftMotor.rotate(-degrees, true);
+    	rightMotor.rotate(degrees);
     	
 
     	System.out.println("LEFT: " + leftMotor.getTachoCount() + "  RIGHT: " + rightMotor.getTachoCount() );
