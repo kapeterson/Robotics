@@ -20,7 +20,7 @@ public class Movements {
     	rightMotor.rotate(degrees);
     	
 
-    	System.out.println("LEFT: " + leftMotor.getTachoCount() + "  RIGHT: " + rightMotor.getTachoCount() );
+    	//System.out.println("LEFT: " + leftMotor.getTachoCount() + "  RIGHT: " + rightMotor.getTachoCount() );
     	Delay.msDelay(2000);
 	}
 	

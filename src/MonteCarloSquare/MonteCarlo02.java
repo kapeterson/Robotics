@@ -1,13 +1,16 @@
 package MonteCarloSquare;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import kp.lego.movement.Movement;
 import kp.lego.movement.Movements;
-
 import lejos.hardware.Sound;
 import lejos.hardware.ev3.LocalEV3;
+import lejos.hardware.lcd.Font;
+import lejos.hardware.lcd.GraphicsLCD;
 import lejos.hardware.motor.Motor;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
@@ -17,11 +20,8 @@ import lejos.robotics.RegulatedMotor;
 import lejos.robotics.SampleProvider;
 import lejos.utility.Delay;
 
-public class MonteCarloSquare01 {
-
-	/**
-	 * @param args
-	 */
+public class MonteCarlo02 {
+	
 	public static final float track = 5.0f;		// 5 inch between wheel centers
 	public static final float wheelD = 1.7f; 		// 1.7 Inch Wheel Diameter = 4.32 cm
 	public static final float wheelWidth = .86f; 	// .86 Inch / 2.2 cm
@@ -52,7 +52,7 @@ public class MonteCarloSquare01 {
 	public static int GOAL = 0;
 	public static double confidence = 0.9f;
 	
-	public static final int NUMBER_OF_LOCALIZATIONS = 2;
+	public static final int NUMBER_OF_LOCALIZATIONS = 1;
 	
     public static void printGrid(){
     	for ( int i = 0; i < grid.length;i++){
@@ -110,6 +110,7 @@ public class MonteCarloSquare01 {
     
     public static void playComplete(){
 		System.out.println("We home brah!!!");
+		printGrid();
 		Sound.playTone(1200, 1000);
 		Delay.msDelay(1000);
 		Sound.playTone(1200, 1000);
@@ -154,11 +155,14 @@ public class MonteCarloSquare01 {
 		boolean localized = false;
 		float dis = 0.0f;
 		double lastMaxP = 0.0f;
-		
+		System.out.flush();
 		for ( int iterations = 0; iterations < 20; iterations++){
 			
 			moveGrid();
-			
+
+			System.out.flush();
+			System.out.println("**************");
+
 			Movements.MoveForward(leftMotor, rightMotor, (int)forwardDegrees);
 			Delay.msDelay(2000);
 			
@@ -187,7 +191,7 @@ public class MonteCarloSquare01 {
 			}
 			
 			if ( maxP < confidence && localized){
-				System.out.println("We lost Localization... something happened");
+				System.out.println("We lost confidence and Localization... what happened bro??!??");
 				localized = false;
 			}
 			
@@ -218,11 +222,17 @@ public class MonteCarloSquare01 {
 				
 			}
 			
+			
 			lastMaxP = maxP;
 			System.out.println("MAXP: " + maxP);
+			
+			if ( maxP == 0.0){
+				System.out.println("ERROR: Cannot recover from 0 probability");
+				iterations = 1000;
+			}
+			
 			printGrid();
 			Delay.msDelay(1500);
-			System.out.println("**************");
 		}
 	}
 	
@@ -250,12 +260,11 @@ public class MonteCarloSquare01 {
 		colors[8] = "WHITE";
 		colors[9] = "RED";
 
-		confidence = 0.9f;		// CONFIDENCE FOR LOCALIZATION
+		confidence = 0.98f;		// CONFIDENCE FOR LOCALIZATION
 		GOAL = 0;				// GOAL SQUARE
-		mError = 0.000f;		// MEASUREMENT ERROR
+		mError = 0.0;			// MEASUREMENT ERROR
 		
-
-		
+	
 		
 		colorMap.put(0, "RED");
 		colorMap.put(13, "RED");
@@ -313,9 +322,15 @@ public class MonteCarloSquare01 {
 			for ( int x = 0; x < NUMBER_OF_LOCALIZATIONS; x++){
 				
 				initGrid();
+				System.out.println("INITIAL P:");
+				printGrid();
+				
 				waitForSensorPush(ts);
 				double sum = reSample();
 				
+				System.out.println("AFTER INITIAL SAMPLE P:");
+				printGrid();
+				Delay.msDelay(2000);
 				
 				// normalize now
 				for ( int i = 0; i < grid.length; i++)
@@ -335,5 +350,4 @@ public class MonteCarloSquare01 {
 
 		}
 	}
-
 }
